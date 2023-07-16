@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "clipboardy": "^3.0.0",
+    "image-type": "^4.1.0",
+    "mammoth": "^1.5.1"
+  }
+}

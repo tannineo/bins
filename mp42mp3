@@ -1,0 +1,9 @@
+#!/bin/sh
+
+for f in *.mp4; do
+  ffmpeg -i "$f" -b:a 320K -vn "${f/%mp4/mp3}" &
+done
+
+wait
+
+echo "mp42mp3 END"

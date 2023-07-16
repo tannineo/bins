@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+const mammoth = require('mammoth')
+const { resolve } = require('node:path')
+const { readFileSync, writeFileSync } = require('node:fs')
+
+let filePath = process.argv[2]
+
+if (!filePath || filePath == '') {
+  console.log('No file path! Usage: doc2text [path_to_file]')
+} else {
+  filePath = resolve(process.cwd(), filePath)
+  console.log('Reading file: ', filePath)
+  const fb = readFileSync(filePath)
+  mammoth.extractRawText({ buffer: fb }).then(data => {
+    const lines = data.value.split('\n')
+    lines.forEach(l => console.log(l))
+
+    writeFileSync(filePath + '.txt', data.value)
+  })
+}

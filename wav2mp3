@@ -1,0 +1,9 @@
+#!/bin/sh
+
+for f in *.wav; do
+  ffmpeg -i "$f" -vn -ar 44100 -ac 2 -b:a 320k "${f/%wav/mp3}" &
+done
+
+wait
+
+echo "wav2mp3 END"

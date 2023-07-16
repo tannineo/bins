@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+const path = require("path");
+const fs = require("fs");
+const imageType = require("image-type");
+
+async function toDataURL() {
+  const { default: clipboardy } = await import("clipboardy");
+
+  if (process.argv.length !== 3) {
+    console.log("Usage: toDataURL <file>");
+    process.exit(1);
+  }
+
+  const filepath = path.join(process.cwd(), process.argv[2]);
+  const contents = fs.readFileSync(filepath);
+
+  const type = imageType(contents);
+  if (type.mime === null) {
+    console.log("Cannot recognize this file: ", filepath);
+    process.exit(1);
+  }
+
+  clipboardy.writeSync(
+    `data:${type.mime};base64,${contents.toString("base64")}`
+  );
+  console.log(`DataURL copied to clipboard: ${filepath}`);
+}
+
+toDataURL();
