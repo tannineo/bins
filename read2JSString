@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const path = require('path');
+
+let filePath = process.argv[2];
+
+fs.readFile(path.resolve(process.env.PWD, filePath), 'utf8', (err, data) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log(JSON.stringify({ output: data }, null, 2));
+});
